@@ -22,7 +22,7 @@ import decimal
 import unicodedata
 from cStringIO import StringIO
 from gluon.utils import simple_hash, web2py_uuid, DIGEST_ALG_BY_SIZE
-from pydal.objects import Field, FieldVirtual, FieldMethod
+from pydal.objects import FieldVirtual, FieldMethod
 
 regex_isint = re.compile('^[+-]?\d+$')
 
@@ -201,15 +201,12 @@ class IS_MATCH(Validator):
 
     def __call__(self, value):
         if self.is_unicode:
-            if not isinstance(value, unicode):
-                match = self.regex.search(str(value).decode('utf8'))
-            else:
+            if isinstance(value,unicode):
                 match = self.regex.search(value)
-        else:
-            if not isinstance(value, unicode):
-                match = self.regex.search(str(value))
             else:
-                match = self.regex.search(value.encode('utf8'))
+                match = self.regex.search(str(value).decode('utf8'))
+        else:
+            match = self.regex.search(str(value))
         if match is not None:
             return (self.extract and match.group() or value, None)
         return (value, translate(self.error_message))
@@ -512,44 +509,34 @@ class IS_IN_DB(Validator):
         zero='',
         sort=False,
         _and=None,
-        left=None,
-        delimiter=None,
-        auto_add=False,
+        left=None
     ):
         from pydal.objects import Table
+        if isinstance(field, Table):
+            field = field._id
+
         if hasattr(dbset, 'define_table'):
             self.dbset = dbset()
         else:
             self.dbset = dbset
-
-        if isinstance(field, Table):
-            field = field._id
-        elif isinstance(field, str):
-            items = field.split('.')
-            if len(items)==1: items+=['id']
-            field = self.dbset.db[items[0]][items[1]]
-
         (ktable, kfield) = str(field).split('.')
         if not label:
             label = '%%(%s)s' % kfield
         if isinstance(label, str):
             if regex1.match(str(label)):
                 label = '%%(%s)s' % str(label).split('.')[-1]
-            fieldnames = regex2.findall(label)
-            if kfield not in fieldnames:
-                fieldnames.append(kfield) # kfield must be last
-        elif isinstance(label, Field):
-            fieldnames = [label.name, kfield] # kfield must be last
-            label = '%%(%s)s' % label.name
-        elif callable(label):
-            fieldnames = '*'
+            ks = regex2.findall(label)
+            if kfield not in ks:
+                ks += [kfield]
+            fields = ks
         else:
-            raise NotImplementedError
-        self.field = field # the lookup field
-        self.fieldnames = fieldnames # fields requires to build the formatting
+            ks = [kfield]
+            fields = 'all'
+        self.fields = fields
         self.label = label
         self.ktable = ktable
         self.kfield = kfield
+        self.ks = ks
         self.error_message = error_message
         self.theset = None
         self.orderby = orderby
@@ -561,8 +548,6 @@ class IS_IN_DB(Validator):
         self.sort = sort
         self._and = _and
         self.left = left
-        self.delimiter = delimiter
-        self.auto_add = auto_add
 
     def set_self_id(self, id):
         if self._and:
@@ -570,10 +555,10 @@ class IS_IN_DB(Validator):
 
     def build_set(self):
         table = self.dbset.db[self.ktable]
-        if self.fieldnames == '*':
+        if self.fields == 'all':
             fields = [f for f in table]
         else:
-            fields = [table[k] for k in self.fieldnames]
+            fields = [table[k] for k in self.fields]
         ignore = (FieldVirtual, FieldMethod)
         fields = filter(lambda f: not isinstance(f, ignore), fields)
         if self.dbset.db._dbname != 'gae':
@@ -606,42 +591,18 @@ class IS_IN_DB(Validator):
             items.insert(0, ('', self.zero))
         return items
 
-    def maybe_add(self, table, fieldname, value):
-        d = {fieldname: value}
-        record = table(**d)
-        if record:
-            return record.id
-        else:
-            return table.insert(**d)
-
     def __call__(self, value):
         table = self.dbset.db[self.ktable]
         field = table[self.kfield]
-
         if self.multiple:
             if self._and:
                 raise NotImplementedError
             if isinstance(value, list):
                 values = value
-            elif self.delimiter:
-                values = value.split(self.delimiter) # because of autocomplete
             elif value:
                 values = [value]
             else:
                 values = []
-
-            if self.field.type in ('id','integer'):
-                new_values = []
-                for value in values:
-                    if isinstance(value,(int,long)) or value.isdigit():
-                        value = int(value)
-                    elif self.auto_add:
-                        value = self.maybe_add(table, self.fieldnames[0], value)
-                    else:
-                        return (values, translate(self.error_message))
-                    new_values.append(value)
-                values = new_values
-
             if isinstance(self.multiple, (tuple, list)) and \
                     not self.multiple[0] <= len(values) < self.multiple[1]:
                 return (values, translate(self.error_message))
@@ -660,32 +621,18 @@ class IS_IN_DB(Validator):
                         return (values, None)
                 elif count(values) == len(values):
                     return (values, None)
-        else:
-            if self.field.type in ('id','integer'):
-                if isinstance(value,(int,long)) or value.isdigit():
-                    value = int(value)
-                elif self.auto_add:
-                    value = self.maybe_add(table, self.fieldnames[0], value)
+        elif self.theset:
+            if str(value) in self.theset:
+                if self._and:
+                    return self._and(value)
                 else:
-                    return (value, translate(self.error_message))
-
-                try:
-                    value = int(value)
-                except TypeError:
-                    return (values, translate(self.error_message))
-
-            if self.theset:
-                if str(value) in self.theset:
-                    if self._and:
-                        return self._and(value)
-                    else:
-                        return (value, None)
-            else:
-                if self.dbset(field == value).count():
-                    if self._and:
-                        return self._and(value)
-                    else:
-                        return (value, None)
+                    return (value, None)
+        else:
+            if self.dbset(field == value).count():
+                if self._and:
+                    return self._and(value)
+                else:
+                    return (value, None)
         return (value, translate(self.error_message))
 
 

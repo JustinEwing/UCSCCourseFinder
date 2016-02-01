@@ -391,6 +391,7 @@ class MetaScheduler(threading.Thread):
         except:
             p.terminate()
             p.join()
+            self.have_heartbeat = False
             logger.debug('    task stopped by general exception')
             tr = TaskReport(STOPPED)
         else:
@@ -405,6 +406,7 @@ class MetaScheduler(threading.Thread):
                 except Queue.Empty:
                     tr = TaskReport(TIMEOUT)
             elif queue.empty():
+                self.have_heartbeat = False
                 logger.debug('    task stopped')
                 tr = TaskReport(STOPPED)
             else:
@@ -920,7 +922,7 @@ class Scheduler(MetaScheduler):
         else:
             st_mapping = {'FAILED': 'FAILED',
                           'TIMEOUT': 'TIMEOUT',
-                          'STOPPED': 'FAILED'}[task_report.status]
+                          'STOPPED': 'QUEUED'}[task_report.status]
             status = (task.retry_failed
                       and task.times_failed < task.retry_failed
                       and QUEUED or task.retry_failed == -1

@@ -64,10 +64,6 @@ else:
         except (ImportError, ValueError):
             HAVE_PBKDF2 = False
 
-HAVE_COMPARE_DIGEST = False
-if hasattr(hmac, 'compare_digest'):
-    HAVE_COMPARE_DIGEST = True
-
 logger = logging.getLogger("web2py")
 
 
@@ -81,8 +77,6 @@ def AES_new(key, IV=None):
 
 def compare(a, b):
     """ Compares two strings and not vulnerable to timing attacks """
-    if HAVE_COMPARE_DIGEST:
-        return hmac.compare_digest(a, b)
     if len(a) != len(b):
         return False
     result = 0
@@ -149,7 +143,6 @@ DIGEST_ALG_BY_SIZE = {
     512 / 4: 'sha512',
 }
 
-
 def get_callable_argspec(fn):
     if inspect.isfunction(fn) or inspect.ismethod(fn):
         inspectable = fn
@@ -160,7 +153,6 @@ def get_callable_argspec(fn):
     else:
         inspectable = fn
     return inspect.getargspec(inspectable)
-
 
 def pad(s, n=32, padchar=' '):
     return s + (32 - len(s) % 32) * padchar
@@ -180,7 +172,7 @@ def secure_dumps(data, encryption_key, hash_key=None, compression_level=None):
 
 
 def secure_loads(data, encryption_key, hash_key=None, compression_level=None):
-    if ':' not in data:
+    if not ':' in data:
         return None
     if not hash_key:
         hash_key = sha1(encryption_key).hexdigest()

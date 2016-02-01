@@ -53,8 +53,8 @@ except:
     except:
         try:
             import win32con
-            import pywintypes
             import win32file
+            import pywintypes
             os_locking = 'windows'
         except:
             pass
