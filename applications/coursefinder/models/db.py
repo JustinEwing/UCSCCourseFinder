@@ -93,6 +93,7 @@ auth.settings.reset_password_requires_verification = True
 
 db = DAL("sqlite://storage.sqlite")
 
+current_term = '2016 Winter'
 term = ['2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter']
 status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
@@ -100,12 +101,12 @@ subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 
 
 db.define_table('search',
-	Field('term'),
-	Field('status'),
-	Field('subject'),
-	Field('course_number', type='integar'),
-	Field('instructor', type='text'),
-	Field('units', type='integar'),
+	Field('term', default=current_term),
+	Field('status', default='All Classes'),
+	Field('subject', default='All Subjects'),
+	Field('course_number', type='integer'),
+	Field('instructor', type='string'),
+	Field('units', type='integer'),
 	Field('m', type='boolean', default=False),
 	Field('tu', type='boolean', default=False),
 	Field('w', type='boolean', default=False),
@@ -118,4 +119,4 @@ db.search.term.requires = IS_IN_SET(term)
 db.search.status.requires = IS_IN_SET(status)
 db.search.subject.requires = IS_IN_SET(subject)
 
-db.course_number.requires = IS_INT_IN_RANGE(0, 299)
+db.search.course_number.requires = IS_INT_IN_RANGE(0, 299)
