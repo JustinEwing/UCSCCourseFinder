@@ -119,4 +119,3 @@ db.search.term.requires = IS_IN_SET(term)
 db.search.status.requires = IS_IN_SET(status)
 db.search.subject.requires = IS_IN_SET(subject)
 
-db.search.course_number.requires = IS_INT_IN_RANGE(0, 299)
