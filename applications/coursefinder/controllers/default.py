@@ -8,8 +8,6 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 
-from gluon.tools import Crud
-crud= Crud(db)
 
 current_term = '2016 Winter'
 term = ['2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter'] 
@@ -18,41 +16,51 @@ subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
 
 def index():
+	default_term = current_term
+	default_stat = 'All Classes'
+	default_subject = 'All Subjects'
+	default_instructor = None
+
 	form = SQLFORM.factory(
-		Field('term', requires=IS_IN_SET(term)),
-		Field('status', requires=IS_IN_SET(status)),
-		Field('subject', requires=IS_IN_SET(status)),
+		Field('term', default=default_term, requires=IS_IN_SET(term)),
+		Field('status', default=default_stat, requires=IS_IN_SET(status)),
+		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
 		Field('course_number', type='integar'),
-		Field('instructor', type='string'),
+		Field('instructor', type='string', default=default_instructor),
 		formstyle='divs',
 		submit_button="Search")
 		
 	query = None
-	test = None
+	results = None
 
 	if form.process().accepted:
 		sel_term = form.vars.term
 		sel_status = form.vars.status
 		sel_subject = form.vars.subject
-		course_num = form.vars.course_number
-		instructor = form.vars.instructor
+		sel_course_num = form.vars.course_number
+		sel_instructor = form.vars.instructor
 
-		test = instructor
+		
+	#	if form.vars:
+	#		query = reduce(lambda a, b: (a | b),
+	#		   (db.search[var] == form.vars[var] for var in form.vars))
+	#		results = db(query).select()
 
 		if sel_term:	
-			query &= db.search.term == sel_term
-		if status:
+			query = db.search.term == sel_term
+		if sel_status:
 			query &= db.search.status == sel_status
-		if subject:
+		if sel_subject == 'All Subjects':
+			query &= True
+		else:
 			query &= db.search.subject == sel_subject
-		if course_num:
-			query &= db.search.course_number == course_num
-		if instructor:
-			query &= db.search.instructor == instructor 
+		if sel_course_num:
+			query &= db.search.course_number == sel_course_num
+		if sel_instructor:
+			query &= db.search.instructor == sel_instructor 
 
-#	results = db(query).select()
+		results = db(query).select()
 
-	results = test 
 
 	return dict(form=form, results=results)
 
