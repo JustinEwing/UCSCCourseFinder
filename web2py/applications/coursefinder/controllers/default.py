@@ -10,7 +10,7 @@
 
 
 current_term = '2016 Winter'
-term = ['2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter'] 
+term = ['2016 Spring', '2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter'] 
 status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
@@ -27,7 +27,7 @@ def index():
 		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
 		Field('course_number', type='integar'),
 		Field('instructor', type='string', default=default_instructor),
-		formstyle='divs',
+		formstyle='bootstrap3_stacked',
 		submit_button="Search")
 		
 	query = None

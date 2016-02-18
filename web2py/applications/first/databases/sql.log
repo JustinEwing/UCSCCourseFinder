@@ -1,0 +1,820 @@
+timestamp: 2016-02-03T15:54:00.548000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T15:54:00.564000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T15:54:00.575000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T15:54:00.586000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T15:54:00.599000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T15:54:00.613000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T17:19:26.044000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T17:21:57.712000
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T17:23:56.689000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image INTEGER REFERENCES image (id) ON DELETE CASCADE  ,
+    author INTEGER REFERENCES person (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T18:14:24.754000
+ALTER TABLE listing ADD author_id INTEGER REFERENCES person (id) ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-02-03T18:23:59.893000
+ALTER TABLE listing ADD date_posted TIMESTAMP;
+success!
+success!
+timestamp: 2016-02-03T18:27:32.321000
+ALTER TABLE listing ADD posted TIMESTAMP;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-02-03T19:39:27.260000
+ALTER TABLE listing ADD image_id INTEGER REFERENCES image (id) ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-02-03T19:51:59.649000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+timestamp: 2016-02-03T20:13:53.757000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+timestamp: 2016-02-03T20:15:18.683000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+timestamp: 2016-02-03T20:17:19.166000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+timestamp: 2016-02-03T20:20:15.390000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:20:15.408000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T20:20:15.421000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T20:20:15.438000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T20:20:15.452000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T20:20:15.467000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T20:20:15.480000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:20:15.493000
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:20:15.511000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES person (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T20:21:18.206000
+ALTER TABLE listing ADD date_posted TIMESTAMP;
+success!
+timestamp: 2016-02-03T20:22:05.141000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:22:05.156000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T20:22:05.168000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T20:22:05.181000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T20:22:05.195000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T20:22:05.207000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T20:22:05.220000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:22:05.235000
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T20:22:05.249000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date_posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES person (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T20:24:41.375000
+ALTER TABLE listing ADD posted_date TIMESTAMP;
+success!
+success!
+timestamp: 2016-02-03T20:27:18.162000
+ALTER TABLE listing ADD posted TIMESTAMP;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-02-03T21:22:05.229000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T21:22:05.246000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T21:22:05.259000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T21:22:05.272000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T21:22:05.286000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T21:22:05.299000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T21:22:05.313000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T21:22:05.327000
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T21:22:05.344000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES person (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:08:27.834000
+CREATE TABLE seller(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+success!
+timestamp: 2016-02-03T22:10:57.565000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:10:57.581000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:10:57.595000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:10:57.609000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T22:10:57.623000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:10:57.637000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T22:10:57.651000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:10:57.664000
+CREATE TABLE seller(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:10:57.681000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES seller (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:25:21.197000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:25:21.213000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:25:21.226000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:25:21.240000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T22:25:21.255000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:25:21.268000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T22:25:21.281000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:25:21.292000
+CREATE TABLE seller(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:25:21.308000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES seller (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:32:47.184000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:32:47.202000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:32:47.214000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T22:32:47.226000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T22:32:47.240000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T22:32:47.253000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T22:32:47.266000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:32:47.277000
+CREATE TABLE seller(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T22:32:47.291000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    author INTEGER REFERENCES seller (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T23:28:25.623000
+ALTER TABLE listing ADD seller INTEGER REFERENCES seller (id) ON DELETE CASCADE  ;
+success!
+success!
+timestamp: 2016-02-03T23:29:16.380000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-02-03T23:29:16.397000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T23:29:16.409000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-02-03T23:29:16.422000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-02-03T23:29:16.437000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-02-03T23:29:16.451000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-02-03T23:29:16.465000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_file CHAR(512),
+    caption CHAR(512)
+);
+success!
+timestamp: 2016-02-03T23:29:16.478000
+CREATE TABLE seller(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512) UNIQUE,
+    phone CHAR(512),
+    name CHAR(512)
+);
+success!
+timestamp: 2016-02-03T23:29:16.495000
+CREATE TABLE listing(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posted TIMESTAMP,
+    title CHAR(512),
+    description CHAR(512),
+    category CHAR(512),
+    price DOUBLE,
+    sold CHAR(1),
+    image CHAR(512),
+    seller INTEGER REFERENCES seller (id) ON DELETE CASCADE  
+);
+success!
