@@ -5,21 +5,21 @@ cgluon.storage
 Storage
 p3
 ((dp4
-S'os'
+S'is_mobile'
 p5
-g3
-((dp6
-S'name'
-p7
-S'Macintosh'
-p8
-stRp9
+I00
 sS'is_tablet'
+p6
+I00
+sS'os'
+p7
+g3
+((dp8
+S'name'
+p9
+S'Macintosh'
 p10
-I00
-sS'is_mobile'
-p11
-I00
+stRp11
 sS'flavor'
 p12
 g3
@@ -28,7 +28,7 @@ S'version'
 p14
 S'X 10.11.3'
 p15
-sg7
+sg9
 S'MacOS'
 p16
 stRp17
@@ -39,7 +39,7 @@ g3
 g14
 S'48.0.2564.103'
 p20
-sg7
+sg9
 S'Chrome'
 p21
 stRp22
@@ -62,7 +62,7 @@ sS'token'
 p31
 S'bf2583d8-8c94-41a7-9e73-bb4264b5876d'
 p32
-sg11
+sg5
 S'auto'
 p33
 sS'authorized'
@@ -79,5 +79,5 @@ aS'5dd3125e-3f61-4217-b826-bf9953b1add8'
 p39
 asS'last_time'
 p40
-F1455757802.7293401
+F1455758147.5382249
 s.
