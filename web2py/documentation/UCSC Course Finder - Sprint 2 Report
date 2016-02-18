@@ -1,0 +1,31 @@
+UCSC Course Finder - Sprint 2 Report
+
+Ian Zentner (PO)
+Justin Ewing
+Umit Ceylan (Scrum)
+Joe Rozo
+
+Release 2.14.16-0.2
+
+Actions to stop doing - The only thing that has been slowing us down were midterms. Now that they are passing, we can focus heavier on the project. Internally, nothing has been holding back progress.
+
+Actions to start doing - More face to face meetings as we finish up the product.
+
+Actions to keep doing - Communicating often through slack. 
+
+Work Completed
+As a developer, I want an up to date DB
+As a developer, I want to quickly and efficiently query my database
+As a user, I want to be able to return my previous page
+As a user, I want a mobile friendly UI
+As a user, I want visually appealing format for results
+
+Work Not Completed
+As a developer, I want to handle multiple client requests
+Completion Rate
+
+User Stories Completed   - 5
+Estimated work hours     - 18
+Days in Sprint 2         - 18
+Hours/Day                - 1
+Stories/Day              - 5/(18)
