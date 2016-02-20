@@ -15,6 +15,7 @@ status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
 
+
 def index():
 	default_term = current_term
 	default_stat = 'All Classes'
@@ -25,7 +26,6 @@ def index():
 		Field('term', default=default_term, requires=IS_IN_SET(term)),
 		Field('status', default=default_stat, requires=IS_IN_SET(status)),
 		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
-		#Field('course_number', type='integar'),
 		Field('course_number', type='string'),
 		Field('instructor', type='string', default=default_instructor),
 		formstyle='bootstrap3_stacked',
@@ -34,18 +34,13 @@ def index():
 	query = None
 	results = None
 
-	if form.process().accepted:
+	if form.process(keepvalues=True).accepted:
 		sel_term = form.vars.term
 		sel_status = form.vars.status
 		sel_subject = form.vars.subject
 		sel_course_num = form.vars.course_number
 		sel_instructor = form.vars.instructor
 
-		
-	#	if form.vars:
-	#		query = reduce(lambda a, b: (a | b),
-	#		   (db.search[var] == form.vars[var] for var in form.vars))
-	#		results = db(query).select()
 
 		if sel_term:	
 			query = db.search.term == sel_term
@@ -54,10 +49,12 @@ def index():
 		if sel_subject == 'All Subjects':
 			query &= True
 		else:
-			query &= db.search.subject == sel_subject
+			if sel_subject == 'Computer Science':
+				query &= db.search.course_number.contains('CMPS')
+			elif sel_subject == 'Computer Engineering':
+				query &= db.search.course_number.contains('CMPE')
 		if sel_course_num:
-			query &= db.search.course_number == sel_course_num
-			#query &= db.search.course_number.belongs(sel_course_num)
+			query &= db.search.course_number.contains(sel_course_num)
 		if sel_instructor:
 			query &= db.search.instructor == sel_instructor 
 
