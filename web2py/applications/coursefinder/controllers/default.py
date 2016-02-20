@@ -10,7 +10,7 @@
 
 
 current_term = '2016 Winter'
-term = ['2016 Spring', '2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter'] 
+term = ['2016 Spring', '2016 Winter', '2016 Summer', '2016 Fall'] 
 status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
@@ -25,7 +25,8 @@ def index():
 		Field('term', default=default_term, requires=IS_IN_SET(term)),
 		Field('status', default=default_stat, requires=IS_IN_SET(status)),
 		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
-		Field('course_number', type='integar'),
+		#Field('course_number', type='integar'),
+		Field('course_number', type='string'),
 		Field('instructor', type='string', default=default_instructor),
 		formstyle='bootstrap3_stacked',
 		submit_button="Search")
@@ -56,6 +57,7 @@ def index():
 			query &= db.search.subject == sel_subject
 		if sel_course_num:
 			query &= db.search.course_number == sel_course_num
+			#query &= db.search.course_number.belongs(sel_course_num)
 		if sel_instructor:
 			query &= db.search.instructor == sel_instructor 
 
@@ -120,5 +122,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-
