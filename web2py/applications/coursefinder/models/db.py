@@ -95,7 +95,7 @@ auth.settings.reset_password_requires_verification = True
 db = DAL("sqlite://storage.sqlite")
 
 current_term = '2016 Winter'
-term = ['2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter']
+term = ['2016 Spring', '2016 Winter', '2016 Summer', '2016 Fall']
 status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 
@@ -105,7 +105,7 @@ db.define_table('search',
 	Field('term', default=current_term),
 	Field('status', default='All Classes'),
 	Field('subject', default='All Subjects'),
-	Field('course_number', type='integer'),
+	Field('course_number', type='string'),
 	Field('instructor', type='string'),
 	Field('units', type='integer'),
 	Field('m', type='boolean', default=False),

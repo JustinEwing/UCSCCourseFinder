@@ -10,10 +10,11 @@
 
 
 current_term = '2016 Winter'
-term = ['2016 Winter', '2015 Fall', '2015 Summer', '2015 Spring', '2015 Winter'] 
+term = ['2016 Spring', '2016 Winter', '2016 Summer', '2016 Fall'] 
 status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
+
 
 def index():
 	default_term = current_term
@@ -25,26 +26,23 @@ def index():
 		Field('term', default=default_term, requires=IS_IN_SET(term)),
 		Field('status', default=default_stat, requires=IS_IN_SET(status)),
 		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
-		Field('course_number', type='integar'),
+		Field('course', type='string'),
 		Field('instructor', type='string', default=default_instructor),
-		formstyle='divs',
+		Field('keyword', type='string'),
+		formstyle='bootstrap3_stacked',
 		submit_button="Search")
 		
 	query = None
 	results = None
 
-	if form.process().accepted:
+	if form.process(keepvalues=True, onsuccess = None).accepted:
 		sel_term = form.vars.term
 		sel_status = form.vars.status
 		sel_subject = form.vars.subject
-		sel_course_num = form.vars.course_number
+		sel_course_num = form.vars.course.lower().split()
 		sel_instructor = form.vars.instructor
-
-		
-	#	if form.vars:
-	#		query = reduce(lambda a, b: (a | b),
-	#		   (db.search[var] == form.vars[var] for var in form.vars))
-	#		results = db(query).select()
+		sel_keyword    = form.vars.keyword
+		sel_kywrd_split = sel_keyword.lower().split()
 
 		if sel_term:	
 			query = db.search.term == sel_term
@@ -53,11 +51,20 @@ def index():
 		if sel_subject == 'All Subjects':
 			query &= True
 		else:
-			query &= db.search.subject == sel_subject
+			if sel_subject == 'Computer Science':
+				query &= db.search.course.contains('CMPS')
+			elif sel_subject == 'Computer Engineering':
+				query &= db.search.course.contains('CMPE')
 		if sel_course_num:
-			query &= db.search.course_number == sel_course_num
+			query &= reduce(lambda a, b: (a & b),
+				(db.search.course.lower().contains(var) for var in sel_course_num))
 		if sel_instructor:
-			query &= db.search.instructor == sel_instructor 
+			query &= db.search.instructor.lower() == sel_instructor.lower() 
+		if sel_keyword:
+			query &= reduce(lambda a, b: (a | b),
+				(db.search.course.lower().contains(var) for var in sel_kywrd_split))
+			query &= reduce(lambda a, b: (a | b),
+				(db.search.instructor.lower() == var.lower() for var in sel_kywrd_split))
 
 		results = db(query).select()
 
@@ -120,5 +127,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-
