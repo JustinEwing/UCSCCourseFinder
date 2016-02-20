@@ -1,9 +1,0 @@
-[2016-02-03 23:40:51] START
-[2016-02-03 23:41:29] EDIT listings/models/db.py: -3
-[2016-02-03 23:42:00] EDIT listings/controllers/default.py: -26
-[2016-02-03 23:42:15] EDIT listings/controllers/default.py: -4
-[2016-02-03 23:42:57] EDIT listings/views/default/index.html: -39
-[2016-02-03 23:46:06] EDIT listings/views/default/index.html: 0
-[2016-02-03 23:46:17] EDIT listings/views/default/index.html: 0
-[2016-02-03 23:47:45] EDIT listings/views/default/index.html: 0
-[2016-02-03 23:48:35] EDIT listings/views/default/index.html: 0

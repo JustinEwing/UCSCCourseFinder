@@ -26,21 +26,23 @@ def index():
 		Field('term', default=default_term, requires=IS_IN_SET(term)),
 		Field('status', default=default_stat, requires=IS_IN_SET(status)),
 		Field('subject', default=default_subject, requires=IS_IN_SET(subject)),
-		Field('course_number', type='string'),
+		Field('course', type='string'),
 		Field('instructor', type='string', default=default_instructor),
+		Field('keyword', type='string'),
 		formstyle='bootstrap3_stacked',
 		submit_button="Search")
 		
 	query = None
 	results = None
 
-	if form.process(keepvalues=True).accepted:
+	if form.process(keepvalues=True, onsuccess = None).accepted:
 		sel_term = form.vars.term
 		sel_status = form.vars.status
 		sel_subject = form.vars.subject
-		sel_course_num = form.vars.course_number
+		sel_course_num = form.vars.course.lower().split()
 		sel_instructor = form.vars.instructor
-
+		sel_keyword    = form.vars.keyword
+		sel_kywrd_split = sel_keyword.lower().split()
 
 		if sel_term:	
 			query = db.search.term == sel_term
@@ -50,13 +52,19 @@ def index():
 			query &= True
 		else:
 			if sel_subject == 'Computer Science':
-				query &= db.search.course_number.contains('CMPS')
+				query &= db.search.course.contains('CMPS')
 			elif sel_subject == 'Computer Engineering':
-				query &= db.search.course_number.contains('CMPE')
+				query &= db.search.course.contains('CMPE')
 		if sel_course_num:
-			query &= db.search.course_number.contains(sel_course_num)
+			query &= reduce(lambda a, b: (a & b),
+				(db.search.course.lower().contains(var) for var in sel_course_num))
 		if sel_instructor:
-			query &= db.search.instructor == sel_instructor 
+			query &= db.search.instructor.lower() == sel_instructor.lower() 
+		if sel_keyword:
+			query &= reduce(lambda a, b: (a | b),
+				(db.search.course.lower().contains(var) for var in sel_kywrd_split))
+			query &= reduce(lambda a, b: (a | b),
+				(db.search.instructor.lower() == var.lower() for var in sel_kywrd_split))
 
 		results = db(query).select()
 
