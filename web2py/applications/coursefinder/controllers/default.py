@@ -58,13 +58,17 @@ def index():
 		if sel_course_num:
 			query &= reduce(lambda a, b: (a & b),
 				(db.search.course.lower().contains(var) for var in sel_course_num))
+
+		#Switch to partial matching e.g "max" -> "max dunne"
 		if sel_instructor:
 			query &= db.search.instructor.lower() == sel_instructor.lower() 
 		if sel_keyword:
 			query &= reduce(lambda a, b: (a | b),
 				(db.search.course.lower().contains(var) for var in sel_kywrd_split))
-			query &= reduce(lambda a, b: (a | b),
-				(db.search.instructor.lower() == var.lower() for var in sel_kywrd_split))
+
+		#Future: Let keyword search among multuple catagories -- Fuzzy matching?
+		#	query &= reduce(lambda a, b: (a | b),
+		#		(db.search.instructor.lower() == var.lower() for var in sel_kywrd_split))
 
 		results = db(query).select()
 
