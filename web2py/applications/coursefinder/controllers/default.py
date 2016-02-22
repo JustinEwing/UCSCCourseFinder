@@ -40,7 +40,7 @@ def index():
 		sel_status = form.vars.status
 		sel_subject = form.vars.subject
 		sel_course_num = form.vars.course.lower().split()
-		sel_instructor = form.vars.instructor
+		sel_instructor = form.vars.instructor.lower().split()
 		sel_keyword    = form.vars.keyword
 		sel_kywrd_split = sel_keyword.lower().split()
 
@@ -59,9 +59,9 @@ def index():
 			query &= reduce(lambda a, b: (a & b),
 				(db.search.course.lower().contains(var) for var in sel_course_num))
 
-		#Switch to partial matching e.g "max" -> "max dunne"
 		if sel_instructor:
-			query &= db.search.instructor.lower() == sel_instructor.lower() 
+			query &= reduce(lambda a, b: (a | b),
+				(db.search.instructor.contains(var) for var in sel_instructor))
 		if sel_keyword:
 			query &= reduce(lambda a, b: (a | b),
 				(db.search.course.lower().contains(var) for var in sel_kywrd_split))
