@@ -61,14 +61,14 @@ def index():
 
 		if sel_instructor:
 			query &= reduce(lambda a, b: (a | b),
-				(db.search.instructor.contains(var) for var in sel_instructor))
+				(db.search.instructor.lower().contains(var) for var in sel_instructor))
 		if sel_keyword:
 			query &= reduce(lambda a, b: (a | b),
 				(db.search.course.lower().contains(var) for var in sel_kywrd_split))
-
-		#Future: Let keyword search among multuple catagories -- Fuzzy matching?
-		#	query &= reduce(lambda a, b: (a | b),
-		#		(db.search.instructor.lower() == var.lower() for var in sel_kywrd_split))
+			#Possibly add search across more fields --issues with =& and =|
+			#=& knocks out previous query, =| doesn't add enough refinement
+			#query &= reduce(lambda a, b: (a | b),
+			#	(db.search.instructor.lower().contains(var) for var in sel_kywrd_split))
 
 		results = db(query).select()
 
