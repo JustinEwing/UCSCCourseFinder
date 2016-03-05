@@ -46,8 +46,10 @@ def index():
 
 		if sel_term:	
 			query = db.search.term == sel_term
-		if sel_status:
-			query &= db.search.status == sel_status
+		if sel_status == 'All Classes':
+			query &= True
+		else:
+		    query &= db.search.status == 'Open Class'
 		if sel_subject == 'All Subjects':
 			query &= True
 		else:

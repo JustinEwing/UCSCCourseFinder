@@ -7,7 +7,15 @@
 {{for result in results:}}
 <p>{{=result.course}}</p>
 <p>{{=result.instructor}}</p>
+<p>
+{{if(result.m):}} M {{pass}}
+{{if(result.tu):}} Tu {{pass}}
+{{if(result.w):}} W {{pass}}
+{{if(result.th):}} Th {{pass}}
+{{if(result.fr):}} F {{pass}}
+</p>
 <p>{{=result.meeting_times}}</p>
+<p>Units: {{=result.units}}</p>
 <hr />
 {{pass}}
 {{pass}}
