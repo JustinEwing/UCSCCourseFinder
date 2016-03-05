@@ -5,6 +5,7 @@
 <hr />
 {{if results is not None:}}
 {{for result in results:}}
+<div class="one" id="command" onclick="jQuery('#{{=result.id}}').slideToggle()">
 <p>{{=result.course}}</p>
 <p>{{=result.instructor}}</p>
 <p>
@@ -15,7 +16,11 @@
 {{if(result.fr):}} F {{pass}}
 </p>
 <p>{{=result.meeting_times}}</p>
+</div>
+<div class="two" style="display:none" id="{{=result.id}}">
+<p>{{=result.info}}</p>
 <p>Units: {{=result.units}}</p>
+</div>
 <hr />
 {{pass}}
 {{pass}}
