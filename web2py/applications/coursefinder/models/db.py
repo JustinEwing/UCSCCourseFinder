@@ -113,7 +113,8 @@ db.define_table('search',
 	Field('w', type='boolean', default=False),
 	Field('th', type='boolean', default=False),
 	Field('fr', type='boolean', default=False),
-	Field('meeting_times', type='time'))
+	Field('meeting_times', type='time'),
+	Field('info', type='string'))
 
 
 db.search.term.requires = IS_IN_SET(term)
