@@ -38,6 +38,10 @@
         <![endif]-->
     <!-- Favicons -->
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+
+	<!-- Adding our custom .css -->
+    <link rel="stylesheet" href="{{=URL('static', 'custom.css')}}"/>
+
     {{block head}}{{end}}
     {{
     # using sidebars need to know what sidebar you want to use
@@ -50,7 +54,7 @@
     (left_sidebar_enabled and 1 or 0)+(right_sidebar_enabled and 1 or 0)]
     }}
   </head>
-  <body>  
+  <body background="http://127.0.0.1:8000/coursefinder/static/_2.13.4/images/real_background.jpg">  
       
     <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
     <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
