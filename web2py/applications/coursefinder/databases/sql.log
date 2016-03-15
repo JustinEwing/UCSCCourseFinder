@@ -1,4 +1,4 @@
-timestamp: 2016-02-01T14:13:48.688765
+timestamp: 2016-03-14T16:39:23.592655
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2016-02-01T14:13:48.703475
+timestamp: 2016-03-14T16:39:23.599952
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-02-01T14:13:48.712966
+timestamp: 2016-03-14T16:39:23.608968
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-02-01T14:13:48.741179
+timestamp: 2016-03-14T16:39:23.616466
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-02-01T14:13:48.746013
+timestamp: 2016-03-14T16:39:23.627337
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-02-01T14:13:48.754316
+timestamp: 2016-03-14T16:39:23.639788
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,27 +53,37 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2016-02-01T15:44:19.762892
+timestamp: 2016-03-14T16:39:23.651024
+CREATE TABLE courses(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id CHAR(512),
+    courses TEXT
+);
+success!
+timestamp: 2016-03-14T16:39:23.678328
 CREATE TABLE search(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     term CHAR(512),
     status CHAR(512),
     subject CHAR(512),
-    course_number INTEGER,
-    instructor TEXT,
+    course CHAR(512),
+    instructor CHAR(512),
     units INTEGER,
     m CHAR(1),
     tu CHAR(1),
     w CHAR(1),
     th CHAR(1),
     fr CHAR(1),
-    meeting_times TIME
+    meeting_times TIME,
+    info CHAR(512),
+    prerequisite CHAR(512),
+    classroom_no CHAR(512)
 );
 success!
 success!
+timestamp: 2016-03-14T17:14:41.499301
+ALTER TABLE auth_user ADD courses TEXT;
 success!
-timestamp: 2016-02-22T14:47:29.884113
-ALTER TABLE search ADD course CHAR(512);
 success!
 success!
 success!
@@ -182,116 +192,6 @@ success!
 success!
 success!
 success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2016-03-04T19:12:39.024080
-ALTER TABLE search ADD info CHAR(512);
 success!
 success!
 success!

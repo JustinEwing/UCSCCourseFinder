@@ -60,7 +60,6 @@ def index():
 		if sel_course_num:
 			query &= reduce(lambda a, b: (a & b),
 				(db.search.course.lower().contains(var) for var in sel_course_num))
-
 		if sel_instructor:
 			query &= reduce(lambda a, b: (a | b),
 				(db.search.instructor.lower().contains(var) for var in sel_instructor))
@@ -77,44 +76,92 @@ def index():
 
 	return dict(form=form, results=results)
 
-def index_bak():
-	form = FORM((TABLE(
-		TR('Term: ', SELECT(term, _term='term', requires=IS_IN_SET(term))),
-		TR('Status: ', SELECT(status, status='status', default='All Classes', requires=IS_IN_SET(status))),
-		TR('Subject: ',SELECT(subject, _subject='subject', default='All Subjects', requires=IS_IN_SET(subject))),
-		TR('Course Number: ',INPUT(_course_number='Course Number')),
-		TR('Instructor: ',  INPUT(_instructor='Instructor'),
-		TR('Units: ', SELECT(units, _units='Units', requires=IS_IN_SET(units))),
-		TR(INPUT(_type='submit'), _action=URL(search_results))))))
+#grabs course id from ajax call, inserts or updates record in courses db
+@auth.requires_login()
+def save_course():
+	cs_list = []
+	new_list = []
 
+	#pull course record #
+	item = db.search[request.vars.id]
+	cs_list.append(item.id)
 
-	if form.process(formname='test').accepted:
-		redirect(URL('search_results', vars=form.vars))
+	#check if user has any courses saved yet
+	if db(db.courses.user_id==auth.user_id).select().first() is None:
+		print 'record doesnt exist'
+		db.courses.insert(user_id=auth.user_id, courses=cs_list)
+	else: #else pull his record, update list:reference
+		print 'update god damnit'
+		row = db(db.courses.user_id==auth.user_id).select().first()
+		new_list = row.courses
+		if item.id not in new_list:
+			new_list += cs_list
+			row.update_record(courses=new_list)
 
+	return str('Saved')
 
-	return dict(form=form)
+#deletes course and hides listing from account view
+@auth.requires_login()
+def del_course():
+	print 'here i am'
+	print request.vars.id
+	#pull record
+	item = db.search[request.vars.id[1]]
+	row = db(db.courses.user_id==auth.user_id).select().first()
+	new_list = row.courses
+	new_list.remove(item.id)
+	id = row.update_record(courses=new_list)
+	#pull list, remove item, update record
 
-def search_results():
-	return dict(request=request)
+	#send back jquery to be eval'ed in ajax to hide course
+	return "jQuery('#del%s').slideUp()" % item.id
 
+#need a second one for my courses page, vars get returned differently
+#I have no idea why
+@auth.requires_login()
+def del_mycourse():
+	print 'here i am'
+	print request.vars.id
+	#pull record
+	item = db.search[request.vars.id]
+	row = db(db.courses.user_id==auth.user_id).select().first()
+	new_list = row.courses
+	new_list.remove(item.id)
+	id = row.update_record(courses=new_list)
+	#pull list, remove item, update record
+
+	#send back jquery to be eval'ed in ajax to hide course
+	return "jQuery('#del%s').slideUp()" % item.id	
+
+#overloads the default profile view
+#pulls courses related to logged in user, send back set
 def user():
-    """
-    exposes:
-    http://..../[app]/default/user/login
-    http://..../[app]/default/user/logout
-    http://..../[app]/default/user/register
-    http://..../[app]/default/user/profile
-    http://..../[app]/default/user/retrieve_password
-    http://..../[app]/default/user/change_password
-    http://..../[app]/default/user/bulk_register
-    use @auth.requires_login()
-        @auth.requires_membership('group name')
-        @auth.requires_permission('read','table name',record_id)
-    to decorate functions that need access control
-    also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
-    """
-    return dict(form=auth())
+   query = None
+   results = None
 
+   if request.args(0) == 'profile':
+      if db(db.courses.user_id==auth.user_id).select().first() is  not None:
+         row = db(db.courses.user_id==auth.user_id).select().first()
+         query = reduce(lambda a, b: (a | b),
+            (db.search.id==var for var in row.courses))
+         results = db(query).select()
+
+   return dict(form=auth(), courses=results)
+
+#returns courses associated with logged in user for my courses page
+@auth.requires_login()
+def profile():
+   query = None
+   results = None
+
+   if db(db.courses.user_id==auth.user_id).select().first() is  not None:
+      row = db(db.courses.user_id==auth.user_id).select().first()
+      query = reduce(lambda a, b: (a | b),
+         (db.search.id==var for var in row.courses))
+      results = db(query).select()
+   return dict(courses=results)
+      
+     
 
 @cache.action()
 def download():

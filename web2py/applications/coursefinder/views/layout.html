@@ -56,7 +56,8 @@
     <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
 
     <!-- Navbar ======================================= -->
-<!--
+
+
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -78,7 +79,7 @@
         </div>
       </div>
     </nav>
--->
+
 
     <!-- Masthead ===================================== -->    
     {{block header}}
@@ -127,6 +128,7 @@
     <!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
+    <script src="{{=URL('static','js/map.js')}}"></script>
     {{block page_js}}{{end page_js}}
     {{if response.google_analytics_id:}}
     <!-- Analytics ==================================== -->

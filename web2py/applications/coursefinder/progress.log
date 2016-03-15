@@ -85,3 +85,5 @@
 [2016-03-05 16:31:14] EDIT coursefinder/views/default/index.html: -1
 [2016-03-05 16:31:27] EDIT coursefinder/views/default/index.html: 0
 [2016-03-05 16:32:25] EDIT coursefinder/views/default/index.html: 0
+[2016-03-07 17:56:18] EDIT coursefinder/models/db.py: 2
+[2016-03-07 17:58:53] EDIT coursefinder/views/default/index.html: 2
