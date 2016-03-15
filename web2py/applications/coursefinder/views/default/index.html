@@ -1,8 +1,9 @@
 {{extend 'layout2.html'}}
 
 
-<header id="top" class="header">
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<header id="top" class="header" style="width: 50%; margin: 0 auto">
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100%; margin: 0 auto">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -13,23 +14,22 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
+    
     <div class="item active">
-      <img src="http://media.ussportscamps.com/assets/camps/soccer/slideshow/ucsc.soccer.jpg" alt="Chania" height="42" width="100%">
+      <img src="http://media.ussportscamps.com/assets/camps/soccer/slideshow/ucsc.soccer.jpg" alt="Chania"  width="100%">
+    </div>
+
+    <div class="item">
+      <img src="http://people.ucsc.edu/~ekobak/Media/10Squiggle.jpg" alt="Chania"  width="100%">
 
     </div>
 
     <div class="item">
-      <img src="http://people.ucsc.edu/~ekobak/Media/10Squiggle.jpg" alt="Chania" height="42" width="100%">
-
+      <img src="http://histcon.ucsc.edu/images/images/bridge.jpg?t=0" alt="Flower"  width="100%">
     </div>
 
     <div class="item">
-      <img src="http://histcon.ucsc.edu/images/images/bridge.jpg?t=0" alt="Flower" height="42" width="100%">
-    </div>
-
-    <div class="item">
-      <img src="http://registrar.ucsc.edu/images/ucsc-at-night.jpg" alt="Flower" height="42" width="100%">
-
+      <img src="http://registrar.ucsc.edu/images/ucsc-at-night.jpg" alt="Flower" width="100%">
     </div>
       
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -41,13 +41,10 @@
     <span class="sr-only">Next</span>
   </a>
   </div>
-     </header>
+  </header>
     
-    
-    <div align="center">
-    <button type="button" class="btn btn-primary btn-large" autocomplete="off">
-        <a href="{{=URL('default', 'search')}}">
-            Go to CourseFinder
-        </a>
-    </button>
+    <br>
+   
+  <div align="center">    
+<a href="{{=URL('default', 'search')}}" class="btn btn-primary btn-large" role="button">Go to CourseFinder</a>
     </div>
