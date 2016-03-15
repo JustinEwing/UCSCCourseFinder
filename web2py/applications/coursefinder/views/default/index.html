@@ -36,10 +36,6 @@
        </button>
 </span> 
 
-
-
-
-
 <!--
 
     <style type="text/css">
@@ -65,16 +61,34 @@
 
 <a href="#" class ='back-to-top'>Back to Top</a>
 
+<script type="text/javascript">
+var amountScrolled = 200;
+
+$(window).scroll(function() {
+  if ( $(window).scrollTop() > amountScrolled ) {
+    $('a.back-to-top').fadeIn('slow');
+  } else {
+    $('a.back-to-top').fadeOut('slow');
+  }
+});
+
+$('a.back-to-top').click(function() {
+  $('html, body').animate({
+    scrollTop: 0
+  }, 700);
+  return false;
+});
+</script>
 
 <style>
 a.back-to-top{
-    display: inline-block;
+    display: none;
     width:48px;
     height:48px;
     position:fixed;
-    bottom:40px;
-    right:40px;
-    background: url('http://127.0.0.1:8000/coursefinder/static/_2.13.4/images/up.png') no-repeat center 43%;
+    bottom:30px;
+    right:15px;
+    background: url('http://169.233.243.185:8000/coursefinder/static/_2.13.4/images/up.png') no-repeat center 43%;
     text-indent:-9999px;
     border-radius:30px;
 }

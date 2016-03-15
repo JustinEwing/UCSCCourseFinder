@@ -16,6 +16,9 @@ subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
 
 
+
+
+
 def index():
 	default_term = current_term
 	default_stat = 'All Classes'
