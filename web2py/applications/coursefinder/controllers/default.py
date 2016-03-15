@@ -103,6 +103,8 @@ def save_course():
 #deletes course and hides listing from account view
 @auth.requires_login()
 def del_course():
+	print 'here i am'
+	print request.vars.id
 	#pull record
 	item = db.search[request.vars.id[1]]
 	row = db(db.courses.user_id==auth.user_id).select().first()
@@ -113,6 +115,23 @@ def del_course():
 
 	#send back jquery to be eval'ed in ajax to hide course
 	return "jQuery('#del%s').slideUp()" % item.id
+
+#need a second one for my courses page, vars get returned differently
+#I have no idea why
+@auth.requires_login()
+def del_mycourse():
+	print 'here i am'
+	print request.vars.id
+	#pull record
+	item = db.search[request.vars.id]
+	row = db(db.courses.user_id==auth.user_id).select().first()
+	new_list = row.courses
+	new_list.remove(item.id)
+	id = row.update_record(courses=new_list)
+	#pull list, remove item, update record
+
+	#send back jquery to be eval'ed in ajax to hide course
+	return "jQuery('#del%s').slideUp()" % item.id	
 
 #overloads the default profile view
 #pulls courses related to logged in user, send back set
@@ -129,6 +148,8 @@ def user():
 
    return dict(form=auth(), courses=results)
 
+#returns courses associated with logged in user for my courses page
+@auth.requires_login()
 def profile():
    query = None
    results = None
