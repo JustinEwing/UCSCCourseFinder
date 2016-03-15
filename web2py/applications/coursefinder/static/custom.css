@@ -1,0 +1,40 @@
+header {
+    display: table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*background: url(http://media.ussportscamps.com/assets/camps/soccer/slideshow/ucsc.soccer.jpg) no-repeat center center scroll;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    
+}
+
+.myCarousel {
+width: 50%;  
+margin:0 auto; /* center your carousel if other than 100% */ 
+}
+
+
+.map {
+    height: 525px;
+}
+
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
