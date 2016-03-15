@@ -16,6 +16,7 @@ Actions to keep doing - Communicating often through slack.
 Work Completed
 As a developer, I want an up to date DB
 As a developer, I want to quickly and efficiently query my database
+As a developer, I want to handle multiple client requests
 As a user, I want to be able to return my previous page
 As a user, I want a mobile friendly UI
 As a user, I want visually appealing format for results
