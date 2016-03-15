@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+
+
+{{extend 'layout.html'}}
+ 
+<div id="profile_user">
+
+<form><input type="hidden" id="id" name="id" value="" /></form>
+
+{{=form}}
+
+<hr />
+{{if courses is not None:}}
+{{for result in courses:}}
+<div class="one" id="command" onclick="jQuery('#{{=result.id}}').slideToggle()">
+<p>{{=result.course}}</p>
+<p>{{=result.instructor}}</p>
+<p>
+{{if(result.m):}} M {{pass}}
+{{if(result.tu):}} Tu {{pass}}
+{{if(result.w):}} W {{pass}}
+{{if(result.th):}} Th {{pass}}
+{{if(result.fr):}} F {{pass}}
+</p>
+</div>
+<div class="two" style="display:none" id="{{=result.id}}">
+<p>{{=result.info}}</p>
+<p>{{=result.meeting_times}}</p>
+<p>Units: {{=result.units}}</p>
+<p>Prerequisite(s): {{=result.prerequisite}}</p>
+<p>Classroom: {{=result.classroom_no}}</p>
+
+</div>
+<hr />
+{{pass}}
+{{pass}}
+
+</div>
+
+<a href="#" class ='back-to-top'>Back to Top</a>
+
+
+<style>
+a.back-to-top{
+    display: inline-block;
+    width:48px;
+    height:48px;
+    position:fixed;
+    bottom:40px;
+    right:40px;
+    background: url('http://127.0.0.1:8000/coursefinder/static/_2.13.4/images/up.png') no-repeat center 43%;
+    text-indent:-9999px;
+    border-radius:30px;
+}
+    
+a:hover.back-to-top{
+    background-color:#000;
+</style>

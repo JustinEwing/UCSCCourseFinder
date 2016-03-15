@@ -55,6 +55,7 @@ response.form_label_separator = myconf.take('forms.separator')
 from gluon.tools import Auth, Service, PluginManager
 
 auth = Auth(db)
+
 service = Service()
 plugins = PluginManager()
 
@@ -91,7 +92,6 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
-
 db = DAL("sqlite://storage.sqlite")
 
 current_term = '2016 Winter'
@@ -100,6 +100,9 @@ status = ['Open Classes', 'All Classes']
 subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 
 
+db.define_table('courses',
+	Field('user_id'),
+	Field('courses', 'list:reference db.search'))
 
 db.define_table('search',
 	Field('term', default=current_term),
@@ -114,8 +117,9 @@ db.define_table('search',
 	Field('th', type='boolean', default=False),
 	Field('fr', type='boolean', default=False),
 	Field('meeting_times', type='time'),
-	Field('info', type='string'))
-
+	Field('info', type='string'),
+    Field('prerequisite', type='string'),
+    Field('classroom_no', type='string'))
 
 db.search.term.requires = IS_IN_SET(term)
 db.search.status.requires = IS_IN_SET(status)
