@@ -118,7 +118,7 @@ def del_course():
 	#pull list, remove item, update record
 
 	#send back jquery to be eval'ed in ajax to hide course
-	return "jQuery('#del%s').slideUp()" % item.id
+	return "jQuery('#del%s').fadeOut()" % item.id
 
 #need a second one for my courses page, vars get returned differently
 #I have no idea why
@@ -135,7 +135,7 @@ def del_mycourse():
 	#pull list, remove item, update record
 
 	#send back jquery to be eval'ed in ajax to hide course
-	return "jQuery('#del%s').slideUp()" % item.id	
+	return "jQuery('#del%s').fadeOut()" % item.id	
 
 #overloads the default profile view
 #pulls courses related to logged in user, send back set
