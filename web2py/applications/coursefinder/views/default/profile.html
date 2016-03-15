@@ -1,0 +1,46 @@
+{{extend 'layout.html'}}
+<form><input type="hidden" id="id" name="id" value="" /></form>
+
+{{if courses is not None:}}
+<h2>
+    My Courses
+</h2>
+   {{for result in courses:}}
+    <div class="two"  id="del{{=result.id}}">  
+    <hr>  
+    <div class="one" id="command" onclick="jQuery('#{{=result.id}}').slideToggle()">
+         <p>{{=result.course}}</p>
+         <p>{{=result.instructor}}</p>
+         <p>
+         {{if(result.m):}} M {{pass}}
+         {{if(result.tu):}} Tu {{pass}}
+         {{if(result.w):}} W {{pass}}
+         {{if(result.th):}} Th {{pass}}
+         {{if(result.fr):}} F {{pass}}
+         </p>
+    </div>
+        
+
+    <div class="two" style="display:none" id="{{=result.id}}">
+         <p>{{=result.info}}</p>
+         <p>{{=result.meeting_times}}</p>
+         <p>Units: {{=result.units}}</p>
+         <p>Prerequisite(s): {{=result.prerequisite}}</p>
+         <p>Classroom: {{=result.classroom_no}}</p>
+
+       <span onclick="jQuery('#id').val('{{=result.id}}');
+        ajax('{{=URL('default', 'del_mycourse')}}', ['id'], ':eval');"
+       ><button type="button" class="btn btn-danger btn-small" data-toggle="button" aria-pressed="false" autocomplete="off">
+        <div id="item{{=result.id}}">delete?</div>
+        </button>
+        </span> 
+
+     </div>
+     </hr>
+ </div>
+{{pass}}
+{{else:}}
+<h2>
+    You currently have no classes saved.
+</h2>
+{{pass}}

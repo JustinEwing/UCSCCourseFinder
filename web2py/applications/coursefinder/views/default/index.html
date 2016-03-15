@@ -3,12 +3,14 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
 
-<h1> UCSC Course Finder </h1>
 {{=form}}
+
+<form><input type="hidden" id="id" name="id" value="" /></form>
 
 <hr />
 {{if results is not None:}}
 {{for result in results:}}
+
 <div class="one" id="command" onclick="jQuery('#{{=result.id}}').slideToggle()">
 <p>{{=result.course}}</p>
 <p>{{=result.instructor}}</p>
@@ -19,11 +21,37 @@
 {{if(result.th):}} Th {{pass}}
 {{if(result.fr):}} F {{pass}}
 </p>
-<p>{{=result.meeting_times}}</p>
 </div>
 <div class="two" style="display:none" id="{{=result.id}}">
 <p>{{=result.info}}</p>
+<p>{{=result.meeting_times}}</p>
 <p>Units: {{=result.units}}</p>
+<p>Prerequisite(s): {{=result.prerequisite}}</p>
+<p>Classroom: {{=result.classroom_no}}</p>
+
+<span onclick="jQuery('#id').val('{{=result.id}}');
+       ajax('{{=URL('default', 'save_course')}}', ['id'], 'item{{=result.id}}');"
+       ><button type="button" class="btn btn-secondary btn-small" data-toggle="button" aria-pressed="false" autocomplete="off">
+       <div id="item{{=result.id}}">Save</div>
+       </button>
+</span> 
+
+<!--
+
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+    </style>
+
+    <div id="map"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB69zJivNkMdxdbY1FNGYfZNVSs4QQjkpw	
+		
+        &libraries=visualization&callback=initMap">
+    </script>
+    <script src="map.js"> </script> -->
+
+
 </div>
 <hr />
 {{pass}}
@@ -33,16 +61,34 @@
 
 <a href="#" class ='back-to-top'>Back to Top</a>
 
+<script type="text/javascript">
+var amountScrolled = 200;
+
+$(window).scroll(function() {
+  if ( $(window).scrollTop() > amountScrolled ) {
+    $('a.back-to-top').fadeIn('slow');
+  } else {
+    $('a.back-to-top').fadeOut('slow');
+  }
+});
+
+$('a.back-to-top').click(function() {
+  $('html, body').animate({
+    scrollTop: 0
+  }, 700);
+  return false;
+});
+</script>
 
 <style>
 a.back-to-top{
-    display: inline-block;
+    display: none;
     width:48px;
     height:48px;
     position:fixed;
-    bottom:40px;
-    right:40px;
-    background: green url("http://icdn.pro/images/en/g/r/green-arrow-up-icone-5011-48.png") no-repeat center 43%;
+    bottom:30px;
+    right:15px;
+    background: url('http://169.233.243.185:8000/coursefinder/static/_2.13.4/images/up.png') no-repeat center 43%;
     text-indent:-9999px;
     border-radius:30px;
 }
