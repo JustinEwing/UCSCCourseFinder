@@ -157,11 +157,13 @@ def profile():
    query = None
    results = None
 
+
    if db(db.courses.user_id==auth.user_id).select().first() is  not None:
       row = db(db.courses.user_id==auth.user_id).select().first()
-      query = reduce(lambda a, b: (a | b),
-         (db.search.id==var for var in row.courses))
-      results = db(query).select()
+      if row.courses:
+         query = reduce(lambda a, b: (a | b),
+            (db.search.id==var for var in row.courses))
+         results = db(query).select()
    return dict(courses=results)
       
      
