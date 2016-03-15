@@ -16,10 +16,11 @@ subject = ['All Subjects', 'Computer Engineering', 'Computer Science']
 units = ['All', '2', '5']
 
 
-
-
-
 def index():
+    return dict(form=auth())
+
+@auth.requires_login()
+def search():    
 	default_term = current_term
 	default_stat = 'All Classes'
 	default_subject = 'All Subjects'

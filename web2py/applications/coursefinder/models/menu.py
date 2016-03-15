@@ -24,7 +24,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
+    (T('Home'), False, URL('default', 'search'), []),
     (T('My Courses'), False, URL('default', 'profile'), [])
 ]
 
@@ -42,4 +42,4 @@ def _():
 
 if DEVELOPMENT_MENU: _()
 
-if "auth" in locals(): auth.wikimenu() 
+if "auth" in locals(): auth.wikimenu()
