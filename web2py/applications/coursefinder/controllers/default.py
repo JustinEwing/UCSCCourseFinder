@@ -17,7 +17,7 @@ units = ['All', '2', '5']
 
 
 def index():
-    return dict(form=auth())
+    return dict()
 
 @auth.requires_login()
 def search():    
@@ -146,9 +146,10 @@ def user():
    if request.args(0) == 'profile':
       if db(db.courses.user_id==auth.user_id).select().first() is  not None:
          row = db(db.courses.user_id==auth.user_id).select().first()
-         query = reduce(lambda a, b: (a | b),
-            (db.search.id==var for var in row.courses))
-         results = db(query).select()
+         if row.courses:
+            query = reduce(lambda a, b: (a | b),
+               (db.search.id==var for var in row.courses))
+            results = db(query).select()
 
    return dict(form=auth(), courses=results)
 
